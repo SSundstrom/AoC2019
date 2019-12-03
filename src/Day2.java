@@ -46,14 +46,6 @@ public class Day2 {
             return instructions.get(0);
         }
 
-        int getNoun() {
-            return instructions.get(1);
-        }
-
-        int getVerb() {
-            return instructions.get(2);
-        }
-
     }
 
     static int part2(ArrayList<Integer> codes) throws NoSolutionException {
