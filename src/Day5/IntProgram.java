@@ -28,7 +28,7 @@ public class IntProgram {
         this.instructions.set(2, verb);
     }
 
-    void run() throws WrongOptCodeException, MissingInput, InvalidMode {
+    void run() {
         boolean running = true;
         while (running) {
             int instruction = getInstruction();
@@ -65,7 +65,7 @@ public class IntProgram {
                     running = false;
                     break;
                 default:
-                    throw new WrongOptCodeException(optCode);
+                    throw new ExecutionException(optCode);
             }
         }
     }
@@ -79,22 +79,16 @@ public class IntProgram {
     }
 
     int getValueFrom(int mode, int paramIndex) {
-        switch (mode) {
-            case 0: return instructions.get(instructions.get(paramIndex));
-            case 1: return instructions.get(paramIndex);
+         switch (mode) {
+             case 0: return instructions.get(instructions.get(paramIndex));
+             case 1: return instructions.get(paramIndex);
+             default:
+                 throw new InvalidMode();
         }
-        System.out.println("Mode not available: " + mode);
-        System.exit(1);
-        return -1;
     }
 
     int[] getModes(int modes) throws InvalidMode {
         int[] res = new int[] {getDigit(2, modes), getDigit(3, modes), getDigit(4, modes)};
-        for ( int mode : res ) {
-            if (mode < 0 || 1 < mode) {
-                throw new InvalidMode();
-            }
-        }
         return res;
     }
 
@@ -172,20 +166,16 @@ public class IntProgram {
         return instructions.get(0);
     }
 
-    static class WrongOptCodeException extends Exception {
-        public WrongOptCodeException(int code) {
+    static class ExecutionException extends RuntimeException {
+        public ExecutionException(int code) {
             super("Optcode " + code  + " faulty!");
         }
     }
 
-    static class MissingInput extends Exception {
+    static class MissingInput extends RuntimeException {
     }
 
-    static class NoSolutionException extends Exception {
-
-    }
-
-    static class InvalidMode extends Exception {
+    static class InvalidMode extends RuntimeException {
 
     }
 

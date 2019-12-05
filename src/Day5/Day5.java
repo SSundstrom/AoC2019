@@ -2,15 +2,8 @@ package Day5;
 
 import Utils.Input;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Day5 {
 
@@ -33,9 +26,8 @@ public class Day5 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (input == null) {
-            System.exit(1);
-        }
+
+        System.out.println(input);
 
         IntProgram prg = new IntProgram(input);
 
@@ -43,7 +35,7 @@ public class Day5 {
 
         try {
             prg.run();
-        } catch (IntProgram.WrongOptCodeException | IntProgram.MissingInput | IntProgram.InvalidMode e) {
+        } catch (IntProgram.ExecutionException | IntProgram.MissingInput | IntProgram.InvalidMode e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
