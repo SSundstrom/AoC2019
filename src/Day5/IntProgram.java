@@ -20,11 +20,11 @@ public class IntProgram {
         input.add(in);
     }
 
-    public void setNoun(int noun){
+    public void setNoun(int noun) {
         this.instructions.set(1, noun);
     }
 
-    public void setVerb(int verb){
+    public void setVerb(int verb) {
         this.instructions.set(2, verb);
     }
 
@@ -78,7 +78,7 @@ public class IntProgram {
         return instructions.get(readOp());
     }
 
-    int getValueFrom(int mode, int paramIndex) {
+    int readFrom(int mode, int paramIndex) {
          switch (mode) {
              case 0: return instructions.get(instructions.get(paramIndex));
              case 1: return instructions.get(paramIndex);
@@ -87,9 +87,12 @@ public class IntProgram {
         }
     }
 
+    void putAt(int value, int paramIndex) {
+        instructions.set(instructions.get(paramIndex), value);
+    }
+
     int[] getModes(int modes) throws InvalidMode {
-        int[] res = new int[] {getDigit(2, modes), getDigit(3, modes), getDigit(4, modes)};
-        return res;
+        return new int[] {getDigit(2, modes), getDigit(3, modes), getDigit(4, modes)};
     }
 
     private int getDigit(int index, int number) {
@@ -101,65 +104,60 @@ public class IntProgram {
     }
 
     void opt1(int[] modes) {
-        int newVal = getValueFrom(modes[0],readOp()) + getValueFrom(modes[1], readOp());
-        int insertPos = getValueFrom(1, readOp());
-        instructions.set(insertPos, newVal);
+        int newVal = readFrom(modes[0],readOp()) + readFrom(modes[1], readOp());
+        putAt(newVal, readOp());
     }
 
     void opt2(int[] modes) {
-        int val1 = getValueFrom(modes[0], readOp());
-        int val2 = getValueFrom(modes[1], readOp());
+        int val1 = readFrom(modes[0], readOp());
+        int val2 = readFrom(modes[1], readOp());
         int newVal = val1 *  val2;
-        int insertPos = getValueFrom(1, readOp());
-        instructions.set(insertPos, newVal);
+        putAt(newVal, readOp());
     }
 
     void opt3() throws MissingInput {
-        int pos = getValueFrom(1, readOp());
         int in;
         try {
             in = input.poll();
         } catch (NullPointerException exception) {
             throw new MissingInput();
         }
-        instructions.set(pos, in);
+        putAt(in, readOp());
     }
 
     void opt4(int[] modes) {
-        int val = getValueFrom(modes[0], readOp());
+        int val = readFrom(modes[0], readOp());
         System.out.println(val);
     }
 
     void opt5(int[] modes) {
-        int val = getValueFrom(modes[0], readOp());
-        int jmpIndex = getValueFrom(modes[1], readOp());
+        int val = readFrom(modes[0], readOp());
+        int jmpIndex = readFrom(modes[1], readOp());
         if (val != 0) {
             index = jmpIndex;
         }
     }
 
     void opt6(int[] modes) {
-        int val = getValueFrom(modes[0], readOp());
-        int jmpIndex = getValueFrom(modes[1], readOp());
+        int val = readFrom(modes[0], readOp());
+        int jmpIndex = readFrom(modes[1], readOp());
         if (val == 0) {
             index = jmpIndex;
         }
     }
 
     void opt7(int[] modes) {
-        int v1 = getValueFrom(modes[0], readOp());
-        int v2 = getValueFrom(modes[1], readOp());
-        int placeAt = getValueFrom(1, readOp());
+        int v1 = readFrom(modes[0], readOp());
+        int v2 = readFrom(modes[1], readOp());
         int res = v1 < v2 ? 1 : 0;
-        instructions.set(placeAt, res);
+        putAt(res, readOp());
     }
 
     void opt8(int[] modes) {
-        int v1 = getValueFrom(modes[0], readOp());
-        int v2 = getValueFrom(modes[1], readOp());
-        int placeAt = getValueFrom(1, readOp());
+        int v1 = readFrom(modes[0], readOp());
+        int v2 = readFrom(modes[1], readOp());
         int res = v1 == v2 ? 1 : 0;
-        instructions.set(placeAt, res);
+        putAt(res, readOp());
     }
 
     int opt99() {
