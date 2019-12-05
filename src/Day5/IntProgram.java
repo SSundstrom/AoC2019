@@ -44,7 +44,7 @@ public class IntProgram {
                     opt2(modes);
                     break;
                 case 3:
-                    opt3(modes);
+                    opt3();
                     break;
                 case 4:
                     opt4(modes);
@@ -114,7 +114,7 @@ public class IntProgram {
         instructions.set(insertPos, newVal);
     }
 
-    void opt3(int[] modes) throws MissingInput {
+    void opt3() throws MissingInput {
         int pos = getValueFrom(1, readOp());
         int in;
         try {

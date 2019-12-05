@@ -15,7 +15,7 @@ public class Day5 {
         return -1;
     }
 
-    public static void run(String filename){
+    public static void run(String filename) {
         String fileName = "input/" + filename + ".txt";
 
         // This will reference one line at a time
