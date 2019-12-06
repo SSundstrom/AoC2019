@@ -90,7 +90,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) {
-        String fileName = "input/day2.txt";
+        String fileName = "input/day" + args[0].toLowerCase() + ".txt";
 
         // This will reference one line at a time
         String line;
