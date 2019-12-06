@@ -9,11 +9,17 @@ public class IntProgram {
     ArrayList<Integer> instructions;
     private int index;
     Queue<Integer> input;
+    Queue<Integer> output;
 
-    public IntProgram(ArrayList<Integer> instructions) {
-        this.instructions = new ArrayList<>(instructions);
+    public IntProgram() {
+        this.instructions = new ArrayList<>();
         input = new LinkedList<>();
+        output = new LinkedList<>();
         index = 0;
+    }
+
+    public void setInstructions(ArrayList<Integer> instructions) {
+        this.instructions = instructions;
     }
 
     public void addInput(int in) {
@@ -26,6 +32,14 @@ public class IntProgram {
 
     public void setVerb(int verb) {
         this.instructions.set(2, verb);
+    }
+
+    public Queue<Integer> readAllOutput() {
+        return output;
+    }
+
+    public Integer readOutput() {
+        return output.poll();
     }
 
     void run() {
@@ -91,7 +105,7 @@ public class IntProgram {
         instructions.set(instructions.get(paramIndex), value);
     }
 
-    int[] getModes(int modes) throws InvalidMode {
+    int[] getModes(int modes) {
         return new int[] {getDigit(2, modes), getDigit(3, modes), getDigit(4, modes)};
     }
 
@@ -127,7 +141,7 @@ public class IntProgram {
 
     void opt4(int[] modes) {
         int val = readFrom(modes[0], readOp());
-        System.out.println(val);
+        output.add(val);
     }
 
     void opt5(int[] modes) {

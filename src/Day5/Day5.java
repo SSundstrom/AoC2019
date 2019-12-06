@@ -15,23 +15,19 @@ public class Day5 {
         return -1;
     }
 
-    public static void run(String filename) {
+    public static void run(String filename, IntProgram prg) {
         String fileName = "input/" + filename + ".txt";
 
         // This will reference one line at a time
-        ArrayList<Integer> input = null;
+        ArrayList<Integer> instructions = null;
 
         try {
-            input = Input.getInputListInt(fileName);
+            instructions = Input.getInputListInt(fileName);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        System.out.println(input);
-
-        IntProgram prg = new IntProgram(input);
-
-        prg.addInput(5);
+        prg.setInstructions(instructions);
 
         try {
             prg.run();
@@ -43,9 +39,18 @@ public class Day5 {
     }
 
     public static void main(String[] args) {
-        for (String file  : args) {
-            System.out.println(" === " + file + " === " );
-            run(file.toLowerCase());
-        }
+        String file = "Day5";
+
+        IntProgram prg = new IntProgram();
+        prg.addInput(1);
+        run(file.toLowerCase(), prg);
+        System.out.print("Part1: ");
+        prg.readAllOutput().stream().filter(integer -> integer != 0).forEach(System.out::print);
+        System.out.println();
+
+        prg = new IntProgram();
+        prg.addInput(5);
+        run(file.toLowerCase(), prg);
+        System.out.println("Part2: " + prg.readOutput());
     }
 }
