@@ -36,9 +36,9 @@ public class Input {
         return stream;
     }
 
-    public static ArrayList<Integer> getInputListInt(String filename) throws ParseException {
+    public static ArrayList<Integer> getInputListInt(String filename) {
 
-        ArrayList<Integer> input;
+        ArrayList<Integer> input = null;
 
         try {
             // FileReader reads text files in the default encoding.
@@ -58,9 +58,10 @@ public class Input {
             System.out.println(
                     "Unable to open file '" +
                             filename + "'");
-            throw new ParseException(filename, 0);
         } catch (IOException e) {
-            throw new ParseException(filename, 0);
+            System.out.println(
+                    "Unable to open file '" +
+                            filename + "'");
         }
 
         return input;
