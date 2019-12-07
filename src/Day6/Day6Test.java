@@ -16,6 +16,4 @@ class Day6Test {
         int path = youParent.distanceTo(sanParent.getID());
         assertEquals(4, path);
     }
-
-
 }

@@ -21,11 +21,7 @@ public class Day5 {
         // This will reference one line at a time
         ArrayList<Integer> instructions = null;
 
-        try {
-            instructions = Input.getInputListInt(fileName);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        instructions = Input.getInputListInt(fileName);
 
         prg.setInstructions(instructions);
 
