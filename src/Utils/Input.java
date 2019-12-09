@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -36,6 +37,10 @@ public class Input {
         return stream;
     }
 
+    public static String getInputAsString(String fileName) {
+        return getInputAsStream(fileName).collect(Collectors.joining());
+    }
+
     public static ArrayList<Integer> getInputListInt(String filename) {
 
         ArrayList<Integer> input = null;
@@ -66,6 +71,13 @@ public class Input {
 
         return input;
 
+    }
+
+    public static ArrayList<BigInteger> getInputListBigInt(String filename) {
+        Stream<String> input = getInputAsStream(filename);
+        return input
+                .map(BigInteger::new)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

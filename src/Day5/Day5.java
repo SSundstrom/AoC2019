@@ -1,18 +1,25 @@
 package Day5;
 
 import Utils.Input;
+import Utils.IntProgram;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Day5 {
 
-    static int part1() {
-        return -1;
+    public static int part1(String filename){
+        IntProgram prg = new IntProgram();
+        prg.addInput(1);
+        run(filename.toLowerCase(), prg);
+        return prg.readAllOutput().stream().max(Integer::compareTo).get();
     }
 
-    static int part2(){
-        return -1;
+    public static int part2(String filename) {
+        IntProgram prg = new IntProgram();
+        prg.addInput(5);
+        run(filename.toLowerCase(), prg);
+        return prg.readOutput();
     }
 
     public static void run(String filename, IntProgram prg) {
@@ -37,16 +44,8 @@ public class Day5 {
     public static void main(String[] args) {
         String file = "Day5";
 
-        IntProgram prg = new IntProgram();
-        prg.addInput(1);
-        run(file.toLowerCase(), prg);
-        System.out.print("Part1: ");
-        prg.readAllOutput().stream().filter(integer -> integer != 0).forEach(System.out::print);
-        System.out.println();
+        System.out.println("Part1: " + part1(file));
+        System.out.println("Part2: " + part2(file));
 
-        prg = new IntProgram();
-        prg.addInput(5);
-        run(file.toLowerCase(), prg);
-        System.out.println("Part2: " + prg.readOutput());
     }
 }

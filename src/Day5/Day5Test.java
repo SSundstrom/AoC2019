@@ -1,5 +1,8 @@
 package Day5;
 
+import Day7.Day7;
+import Utils.Input;
+import Utils.IntProgram;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -116,4 +119,13 @@ class Day5Test {
         assertEquals(expected, prg.readOutput());
     }
 
+    @Test
+    void part1() {
+        assertEquals( 12428642 , Day5.part1("day5"));
+    }
+
+    @Test
+    void part2() {
+        assertEquals( 918655 , Day5.part2("day5"));
+    }
 }

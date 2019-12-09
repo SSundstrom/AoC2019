@@ -1,15 +1,10 @@
-package Day7;
+package Utils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class IntProgram {
-
-    enum Code {
-        PAUS, DONE
-    }
 
     ArrayList<Integer> instructions;
     private int index;
@@ -47,7 +42,7 @@ public class IntProgram {
         return output.poll();
     }
 
-    Code run() {
+    public Code run() {
         boolean running = true;
         Code exitCode = null;
 
@@ -193,19 +188,20 @@ public class IntProgram {
         return Code.DONE;
     }
 
-    static class ExecutionException extends RuntimeException {
+    public static class ExecutionException extends RuntimeException {
         public ExecutionException(int code) {
             super("Optcode " + code  + " faulty!");
         }
     }
 
-    static class MissingInput extends RuntimeException {
+    public static class MissingInput extends RuntimeException {
     }
 
-    static class InvalidMode extends RuntimeException {
+    public static class InvalidMode extends RuntimeException {
 
     }
 
 
 
 }
+
