@@ -1,5 +1,7 @@
 package Utils;
 
+import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Pos {
@@ -48,8 +50,71 @@ public class Pos {
                 y == pos.y;
     }
 
+    public Pos add(Pos p) {
+        return new Pos(this.x + p.x, this.y + p.y);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public Pos directionTo(Pos p2) {
+        BigInteger x = BigInteger.valueOf(p2.x - this.x);
+        BigInteger y = BigInteger.valueOf(p2.y - this.y);
+        BigInteger gcd = x.gcd(y);
+        BigInteger dX;
+        BigInteger dY;
+        if (gcd.equals(BigInteger.ZERO)) {
+             dX = x.equals(BigInteger.ZERO) ? x : x.divide(x);
+             dY = y.equals(BigInteger.ZERO) ? y : y.divide(y);
+        } else {
+            dX = x.divide(gcd);
+            dY = y.divide(gcd);
+        }
+
+        return new Pos(dX.intValue(), dY.intValue());
+    }
+
+    public Pos scale(int factor) {
+        return new Pos(this.x * factor, this.y * factor);
+    }
+
+    public static Comparator<Pos> getAngleComparator(Pos relativePos) {
+        return new angleComparator(relativePos);
+    }
+
+    public double angleTo(Pos p2) {
+        int dot = this.x*p2.x + this.y*p2.y;
+        double angle = Math.acos(dot/(getLength() * p2.getLength()));
+        if (p2.x < 0) {
+            angle = Math.toRadians(360) - angle;
+        }
+        return angle;
+    }
+
+    public double getLength() {
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
+    }
+
+    static class angleComparator implements Comparator<Pos> {
+
+        private Pos relativePos;
+
+        public angleComparator(Pos relativePos) {
+            this.relativePos = relativePos;
+        }
+
+        @Override
+        public int compare(Pos p1, Pos p2) {
+            double a1 = relativePos.angleTo(p1);
+            double a2 = relativePos.angleTo(p2);
+            return Double.compare(a1, a2);
+        }
+    }
+
+    public int getAsAOCOutput() {
+        return this.x * 100 + this.y;
+    }
+
 }
