@@ -49,25 +49,12 @@ public class Day10 {
         Pos home = mostVisible(dirs);
         ArrayList<Pos> directions = new ArrayList<>(dirs.get(home));
         directions.sort(Pos.getAngleComparator(Pos.NORTH));
-        ArrayList<Pos> destroyed = new ArrayList<>();
-
-        while (destroyed.size() < 200 && !map.isEmpty()) {
-            Iterator<Pos> a = directions.iterator();
-            while (a.hasNext()) {
-                Pos direction = a.next();
-                for (int i = 1; i < 26; i++) {
-                    Pos possiblePlanet = home.add(direction.scale(i));
-                    if (map.contains(possiblePlanet)) {
-                        map.remove(possiblePlanet);
-                        destroyed.add(possiblePlanet);
-                        break;
-                    }
-                }
-            }
+        Pos direction = directions.get(199);
+        Pos possiblePlanet = home.add(direction);
+        while (!map.contains(possiblePlanet)) {
+            possiblePlanet = possiblePlanet.add(direction);
         }
-
-        return destroyed.get(199).getAsAOCOutput();
-
+        return possiblePlanet.getAsAOCOutput();
     }
 
     public static HashSet<Pos> parseInput(Stream<String> input) {
