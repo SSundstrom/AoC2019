@@ -6,7 +6,8 @@ public class Pos {
     final int x;
     final int y;
 
-    public static final Pos origo = new Pos(0, 0);
+    public static final Pos ORIGO = new Pos(0, 0);
+    public static final Pos NORTH = new Pos(0, -1);
 
     public Pos(int x, int y) {
         this.x = x;

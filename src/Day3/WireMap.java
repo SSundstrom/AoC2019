@@ -22,7 +22,7 @@ public class WireMap {
 
     private void merge(Pos pos, Integer length) {
         if (map.containsKey(pos)) {
-            int manhattanDistance = pos.manhattanDist(Pos.origo);
+            int manhattanDistance = pos.manhattanDist(Pos.ORIGO);
             closestCollision = Math.min(closestCollision, manhattanDistance);
             int wireDistance = map.get(pos) + length;
             shortestCollision = Math.min(shortestCollision, wireDistance);
