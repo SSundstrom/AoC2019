@@ -147,6 +147,10 @@ public class BigIntProgram {
         }
     }
 
+    public boolean hasOutput() {
+        return !output.isEmpty();
+    }
+
     void putAt(int mode, BigInteger value, int paramIndex) {
         switch (mode) {
             case 0:
@@ -185,13 +189,12 @@ public class BigIntProgram {
     }
 
     void opt3(int[] modes) throws MissingInput {
-        BigInteger in;
-        try {
-            in = input.poll();
-        } catch (NullPointerException exception) {
+        BigInteger in = input.poll();
+        if (in == null) {
             throw new MissingInput();
+        } else {
+            putAt(modes[0], in, readOp());
         }
-        putAt(modes[0], in, readOp());
     }
 
     void opt4(int[] modes) {

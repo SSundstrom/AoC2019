@@ -113,8 +113,29 @@ public class Pos {
         }
     }
 
+    public static class xComparator implements Comparator<Pos> {
+        @Override
+        public int compare(Pos p1, Pos p2) {
+            return Integer.compare(p1.x, p2.x);
+        }
+    }
+
+    public static class yComparator implements Comparator<Pos> {
+        @Override
+        public int compare(Pos p1, Pos p2) {
+            return Integer.compare(p1.y, p2.y);
+        }
+    }
+
     public int getAsAOCOutput() {
         return this.x * 100 + this.y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
