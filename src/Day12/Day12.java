@@ -20,8 +20,8 @@ public class Day12 {
         return new Pos3(x,y,z);
     }
 
-    private static State<Tuple<Integer>> getState(Axis axis, ArrayList<Moon> moons) {
-        return new State<>(
+    private static Quadruple<Tuple<Integer>> getState(Axis axis, ArrayList<Moon> moons) {
+        return new Quadruple<>(
                 moons.get(0).getThings(axis),
                 moons.get(1).getThings(axis),
                 moons.get(2).getThings(axis),
@@ -34,17 +34,17 @@ public class Day12 {
         BigInteger loopY = BigInteger.ZERO;
         BigInteger loopZ = BigInteger.ZERO;
 
-        HashMap<State<Tuple<Integer>>, BigInteger> zState = new HashMap<>();
-        HashMap<State<Tuple<Integer>>, BigInteger> yState = new HashMap<>();
-        HashMap<State<Tuple<Integer>>, BigInteger> xState = new HashMap<>();
+        HashMap<Quadruple<Tuple<Integer>>, BigInteger> zState = new HashMap<>();
+        HashMap<Quadruple<Tuple<Integer>>, BigInteger> yState = new HashMap<>();
+        HashMap<Quadruple<Tuple<Integer>>, BigInteger> xState = new HashMap<>();
 
         BigInteger i = BigInteger.ZERO;
         while (loopX.multiply(loopY).multiply(loopZ).equals(BigInteger.ZERO)) {
             step(moons);
 
-            State<Tuple<Integer>> z = getState(Axis.Z, moons);
-            State<Tuple<Integer>> x = getState(Axis.X, moons);
-            State<Tuple<Integer>> y = getState(Axis.Y, moons);
+            Quadruple<Tuple<Integer>> z = getState(Axis.Z, moons);
+            Quadruple<Tuple<Integer>> x = getState(Axis.X, moons);
+            Quadruple<Tuple<Integer>> y = getState(Axis.Y, moons);
 
             if (zState.containsKey(z) && loopZ.equals(BigInteger.ZERO)) {
                 loopZ = i.subtract(zState.get(z));
