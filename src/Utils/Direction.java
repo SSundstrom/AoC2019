@@ -2,6 +2,7 @@ package Utils;
 
 import javax.print.attribute.standard.ReferenceUriSchemesSupported;
 import java.text.ParseException;
+import java.util.stream.Stream;
 
 public enum Direction {
     N, E, S, W;
@@ -45,5 +46,9 @@ public enum Direction {
             default:
                 throw new RuntimeException("[Direction:turnRight] This really should not happen");
         }
+    }
+
+    public static Stream<Direction> getAllDirections() {
+        return Stream.of(N, S, W, E);
     }
 }
