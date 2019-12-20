@@ -2,8 +2,6 @@ package Day14;
 
 import Utils.Input;
 
-import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.stream.Stream;
 
 public class Day14 {
