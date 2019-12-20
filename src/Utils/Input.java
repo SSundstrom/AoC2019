@@ -38,7 +38,7 @@ public class Input {
     }
 
     public static String getInputAsString(String fileName) {
-        return getInputAsStream(fileName).collect(Collectors.joining());
+        return getInputAsStream(fileName).collect(Collectors.joining("\n"));
     }
 
     public static ArrayList<Integer> getInputListInt(String filename) {

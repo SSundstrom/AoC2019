@@ -1,7 +1,10 @@
 package Utils;
 
+import javafx.beans.Observable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class General {
 

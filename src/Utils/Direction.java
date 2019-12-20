@@ -37,6 +37,18 @@ public enum Direction {
         }
     }
 
+    public Direction opposite() {
+        switch (this) {
+            case N: return S;
+            case E: return W;
+            case S: return N;
+            case W: return E;
+            default:
+                throw new RuntimeException("[Direction:opposite] This really should not happen");
+        }
+    }
+
+
     private Direction turnRight() {
         switch (this) {
             case N: return E;
@@ -51,4 +63,9 @@ public enum Direction {
     public static Stream<Direction> getAllDirections() {
         return Stream.of(N, S, W, E);
     }
+
+    public Stream<Direction> getAllOtherDirections() {
+        return getAllDirections().filter(p -> !p.equals(this));
+    }
+
 }
