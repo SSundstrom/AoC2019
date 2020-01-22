@@ -3,6 +3,7 @@ package Day18;
 import Utils.Direction;
 import Utils.Pos;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,15 +11,13 @@ import java.util.stream.Collectors;
 
 public class Explorer {
 
-    private Map map;
     private HashSet<Path> paths;
     private Path finalPath;
 
 
     public Explorer(Map map) {
-        this.map = map;
         paths = new HashSet<>();
-        paths.add(new Path(map.entryPoint, new HashSet<>(), 0));
+        paths.add(new Path(map.entryPoint, map, 0));
         finalPath = null;
     }
 
@@ -26,13 +25,13 @@ public class Explorer {
         Path bestPath = null;
         for (Path path : paths) {
             if (bestPath == null) bestPath = path;
-            switch (Integer.compare(bestPath.getNumberOfVisited(), path.getNumberOfVisited())) {
-                case 1:
+            switch (Integer.compare(bestPath.map.keys.size(), path.map.keys.size())) {
+                case -1:
                     break;
                 case 0:
                     bestPath = bestPath.distance > path.distance ? bestPath : path;
                     break;
-                case -1:
+                case 1:
                     bestPath = path;
                     break;
                 default:
@@ -44,28 +43,28 @@ public class Explorer {
 
     public boolean exploring() {
         Path bestPath = getBestPath();
-        if (bestPath.getNumberOfVisited() == map.items.size()) {
+        if (bestPath.map.keys.isEmpty()) {
             finalPath = bestPath;
         }
         return finalPath == null;
     }
 
     public void goToNextKey() {
-        HashMap<HashSet<PoI>, Path> newPaths = new HashMap<>();
+        HashMap<Collection<Key>, Path> newPaths = new HashMap<>();
         for (Path path : paths) {
-            HashSet<Path> steps = moveToPoI(path);
+            HashSet<Path> steps = moveToKey(path);
             for (Path step : steps) {
-                if (!newPaths.containsKey(step.visited) || newPaths.get(step.visited).distance >= step.distance) {
-                    newPaths.put(step.visited, step);
+                if (!newPaths.containsKey(step.map.keys.values()) || newPaths.get(step.map.keys.values()).distance >= step.distance) {
+                    newPaths.put(step.map.keys.values(), step);
                 }
             }
         }
         paths = new HashSet<Path>(newPaths.values());
     }
 
-    private HashSet<Path> moveToPoI(Path path) {
-        HashMap<PoI, Integer> distanceToPoi = getRouteOptions(path);
-        HashSet<Path> newPaths = appendPath(path, distanceToPoi);
+    private HashSet<Path> moveToKey(Path path) {
+        HashMap<Key, Integer> distanceToKey = getRouteOptions(path);
+        HashSet<Path> newPaths = appendPath(path, distanceToKey);
         return newPaths;
     }
 
@@ -83,12 +82,12 @@ public class Explorer {
         return newPaths;
     }
 
-    private HashMap<PoI, Integer> getRouteOptions(Path path) {
-        HashMap<PoI, Integer> routeOptions = new HashMap<>();
+    private HashMap<Key, Integer> getRouteOptions(Path path) {
+        HashMap<Key, Integer> routeOptions = new HashMap<>();
         for (Object o : Direction.getAllDirections().toArray()) {
             if (o instanceof Direction) {
                 Direction d = (Direction) o;
-                routeOptions.putAll(forwardUntilPoI(path.position.move(d), d, 1, path.visited));
+                routeOptions.putAll(forwardUntilKey(path.position.move(d), d, 1, path.visited));
             }
         }
 
@@ -97,7 +96,7 @@ public class Explorer {
         return routeOptions;
     }
 
-    private HashMap<PoI, Integer> forwardUntilPoI(Pos position, Direction moved, int steps, Set<PoI> visited) {
+    private HashMap<PoI, Integer> forwardUntilKey(Pos position, Direction moved, int steps, Set<PoI> visited) {
         HashMap<PoI, Integer> routes = new HashMap<>();
         if (map.isPoI(position) && !visited.contains(map.posToPoI(position))) {
             routes.put(map.posToPoI(position), steps);
@@ -107,7 +106,7 @@ public class Explorer {
             Set<Direction> directions = moved.opposite().getAllOtherDirections().collect(Collectors.toSet());
             if (directions.contains(moved.opposite())) throw new RuntimeException("Forward is fucked.");
             for (Direction direction : directions) {
-                routes.putAll(forwardUntilPoI(position.move(direction), direction, steps+1, visited));
+                routes.putAll(forwardUntilKey(position.move(direction), direction, steps+1, visited));
             }
         }
         return routes;

@@ -16,6 +16,30 @@ public class Pos {
         this.y = y;
     }
 
+    public Pos invMove(Direction d) {
+        if (d.equals(Direction.N) || d.equals(Direction.S)) {
+            d = d.opposite();
+        }
+        return move(d);
+    }
+
+    public Pos invMove(Direction d, int steps) {
+        switch (d) {
+            case N:
+                return new Pos(x, y-steps);
+            case S:
+                return new Pos(x, y+steps);
+            case E:
+                return new Pos(x+steps, y);
+            case W:
+                return new Pos(x-steps, y);
+        }
+        System.out.println("SOMETHING WENT HORRIBLY WRONG!");
+        System.exit(1);
+        return this;
+
+    }
+
     public Pos move(Direction d){
         switch (d) {
             case N:

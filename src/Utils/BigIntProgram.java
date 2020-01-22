@@ -33,12 +33,26 @@ public class BigIntProgram {
         return prg.readOutput();
     }
 
+    public static BigInteger runAndReturnWithInput(int[] input, int maxProgramSize, ArrayList<BigInteger> instructions){
+        BigIntProgram prg = new BigIntProgram();
+        prg.setInstructions(new ArrayList<>(instructions), maxProgramSize);
+        for (int i : input) {
+            prg.addInput(i);
+        }
+        prg.run();
+        return prg.readOutput();
+    }
+
     public int getRelativeBase() {
         return relativeBase;
     }
 
     public void setRelativeBase(int relativeBase) {
         this.relativeBase = relativeBase;
+    }
+
+    public void setInstructions(ArrayList<BigInteger> instructions) {
+        setInstructions(instructions, 10000);
     }
 
     public void setInstructions(ArrayList<BigInteger> instructions, int programSize) {
